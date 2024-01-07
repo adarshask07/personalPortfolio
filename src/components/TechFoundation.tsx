@@ -44,8 +44,8 @@ const TechFoundation: React.FC<TechFoundationProps> = ({ skillsData, theme }) =>
         {
           skillsData[0].skills.map((skill, index) => (
 
-            <div className=" flex item-center justify-center">
-              <div key={index} className={`skill-item cursor-pointer flex flex-col gap-6 flex-wrap  rounded-2xl p-4 border-solid border-[0.25rem] text-2xl text-center max-lg:items-center    ${theme === "dark" ? "bg-[--darkblue]" : "bg-[--icewhite]"
+            <div key={index} className=" flex item-center justify-center">
+              <div  className={`skill-item cursor-pointer flex flex-col gap-6 flex-wrap  rounded-2xl p-4 border-solid border-[0.25rem] text-2xl text-center max-lg:items-center    ${theme === "dark" ? "bg-[--darkblue]" : "bg-[--icewhite]"
                 }`} >
                 {skill.title}
 

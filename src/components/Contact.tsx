@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Button from "./Button";
 // import axios from "axios";
 import { Highlight, themes } from "prism-react-renderer";
-import { contactData,  } from "../assets/lib/data.tsx";
+import { contactData, } from "../assets/lib/data.tsx";
 import { useSectionInView } from "../assets/lib/hooks";
 import { useLanguage } from "../context/language-context";
 import { ToastContainer, toast } from "react-toastify";
@@ -35,12 +35,12 @@ const Contact: React.FC = () => {
   const notifySentForm: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     // const data = { name, email, subject, message };
-  
+
     // try {
     //   const apiKey = 'AIzaSyBrP2zmZ62zs3qjTO_cw163--XVYUh9b14';
     //   const sheetId = '1_EiRu-vkOrZ55qUa9lLhKb0ihhaRwNPNANY5mZTeGCQ';
     //   const range = 'Sheet1'; // Adjust sheet name or range as needed
-  
+
     //   const response = await fetch(
     //     `https://script.google.com/macros/s/AKfycbw5Fd2Ixd6Fu9s_kKmfQRBLKcRMVX1fGY7JdlYDlpKZ1qV-rk10uVyxzOmBRQNbDFWh0A/exec`,
     //     {
@@ -53,7 +53,7 @@ const Contact: React.FC = () => {
     //       }),
     //     }
     //   );
-  
+
     //   if (response.ok) {
     //     // Handle success
     //     console.log('Data sent successfully');
@@ -66,47 +66,53 @@ const Contact: React.FC = () => {
     // }
 
     let url = 'https://api.sheety.co/1500e1b03c1c6c6be65a96d27f08c330/portfolioResponses/sheet1';
+    const now = new Date(); // Get current date and time
+    const formattedDate = now.toLocaleDateString(); // Format date
+    const formattedTime = now.toLocaleTimeString(); // Format time
 
     let body = {
-      sheet1: 
-        {
-          name:name,
-          email:email,
-          subject:subject,
-          message:message,
-        },
-      
+      sheet1:
+      { date : formattedDate,
+        time : formattedTime, 
+        name: name,
+        email: email,
+        subject: subject,
+        message: message,
+      },
+
     };
-    
+
     try {
+
       fetch(url, {
-      
+
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(body)
       })
-      .then((response) => response.json())
-      .then(json => {
-        // Do something with object
-        console.log(json);
-      });
+        .then((response) => response.json())
+        .then(json => {
+          // Do something with object
+          console.log(json);
+        });
       toast.success(`Message Sent Sucessfully! 
                       I Will Get Back To You Soon !`);
-       setName("") ;
-       setEmail("");
-       setSubject("");
-       setMessage("") ;
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage(" ");
       
+
     } catch (error) {
       toast.error('Message not sent  successfully!');
     }
-    
+
 
 
   };
-  
+
 
   const handleInputFocus = (fieldName: string) => {
     setCursor(`${fieldName}${cursor}`);
