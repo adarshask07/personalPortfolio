@@ -5,7 +5,7 @@ import { Highlight, themes } from "prism-react-renderer";
 import { contactData,  } from "../assets/lib/data.tsx";
 import { useSectionInView } from "../assets/lib/hooks";
 import { useLanguage } from "../context/language-context";
-import { ToastContainer,  } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { useTheme } from "../context/theme-context";
 import { motion, useScroll, useTransform } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
@@ -33,53 +33,80 @@ const Contact: React.FC = () => {
   const opacityProgess = useTransform(scrollYProgress, [0, 1], [0.6, 1]);
 
   const notifySentForm: React.FormEventHandler<HTMLFormElement> = async (e) => {
-    // setError(null);
-    // console.log(error);
-
     e.preventDefault();
-    const data = { name: name, email: email, subject: subject, message: message }
-    console.log(data.name);
-
+    // const data = { name, email, subject, message };
+  
     // try {
-    //   const response = await axios.post(apiBaseUrl, data);
-    //   console.log(response);
-    //   if (language === "DE") {
-    //     toast.success(toastMessages.successEmailSent.de);
+    //   const apiKey = 'AIzaSyBrP2zmZ62zs3qjTO_cw163--XVYUh9b14';
+    //   const sheetId = '1_EiRu-vkOrZ55qUa9lLhKb0ihhaRwNPNANY5mZTeGCQ';
+    //   const range = 'Sheet1'; // Adjust sheet name or range as needed
+  
+    //   const response = await fetch(
+    //     `https://script.google.com/macros/s/AKfycbw5Fd2Ixd6Fu9s_kKmfQRBLKcRMVX1fGY7JdlYDlpKZ1qV-rk10uVyxzOmBRQNbDFWh0A/exec`,
+    //     {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify({
+    //         values: [[name, email, subject, message]],
+    //       }),
+    //     }
+    //   );
+  
+    //   if (response.ok) {
+    //     // Handle success
+    //     console.log('Data sent successfully');
     //   } else {
-    //     toast.success(toastMessages.successEmailSent.en);
+    //     // Handle error
+    //     console.error('Error sending data:', response.statusText);
     //   }
     // } catch (error) {
-    //   console.log(error);
-    //   if (language === "DE") {
-    //     toast.error(toastMessages.failedEmailSent.de);
-    //   } else {
-    //     toast.error(toastMessages.failedEmailSent.en);
-    //   }
-    //   setError("An Error occured, try again later");
+    //   console.error('Error sending data:', error);
     // }
-    fetch('https://script.google.com/macros/s/AKfycbxaQ9puw2qfBEgLEBVzBQGDMdDSBhrWoGP36sqxSWwSttXGkQJ_VrGVYB6ytJLG1H9gTA/exec', {
-      method: 'POST', // Specify POST method for sending data
-      body: JSON.stringify(data), // Serialize the data as JSON
-      headers: {
-        'Content-Type': 'application/json' // Set the appropriate content type
-      }
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not OK'); // Handle potential errors
-        }
-        return response.text(); // Get the response as text
-      })
-      .then(responseText => {
-        console.log(responseText); // Log the response from the Google Script
-      })
-      .catch(error => {
-        console.error('Error sending data:', error); // Handle any errors
-      });
 
+    let url = 'https://api.sheety.co/1500e1b03c1c6c6be65a96d27f08c330/portfolioResponses/sheet1';
+
+    let body = {
+      sheet1: 
+        {
+          name:name,
+          email:email,
+          subject:subject,
+          message:message,
+        },
+      
+    };
+    
+    try {
+      fetch(url, {
+      
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body)
+      })
+      .then((response) => response.json())
+      .then(json => {
+        // Do something with object
+        console.log(json);
+      });
+      toast.success(`Message Sent Sucessfully! 
+                      I Will Get Back To You Soon !`);
+       setName("") ;
+       setEmail("");
+       setSubject("");
+       setMessage("") ;
+      
+    } catch (error) {
+      toast.error('Message not sent  successfully!');
+    }
+    
 
 
   };
+  
 
   const handleInputFocus = (fieldName: string) => {
     setCursor(`${fieldName}${cursor}`);
