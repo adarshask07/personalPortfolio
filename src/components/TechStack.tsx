@@ -12,7 +12,7 @@ import SkillSection from "./SkillSection";
 import RadialGradient from "./RadialGradient";
 import { motion, useScroll, useTransform } from "framer-motion";
 import TechFoundation from "./TechFoundation";
-import SkillProgress from "./SkillProgress";
+// import SkillProgress from "./SkillProgress";
 
 const TechStack: React.FC = () => {
   const { ref } = useSectionInView("Skills");
