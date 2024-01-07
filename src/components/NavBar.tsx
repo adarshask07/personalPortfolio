@@ -5,7 +5,7 @@ import ScrollToAnchor from "./Listener";
 import { useActiveSectionContext } from "../context/active-section-context";
 import { useTheme } from "../context/theme-context";
 import { useLanguage } from "../context/language-context";
-import LanguageSwitch from "./LanguageSwitch";
+// import LanguageSwitch from "./LanguageSwitch";
 
 const NavBar: React.FC = () => {
   const { theme } = useTheme();
